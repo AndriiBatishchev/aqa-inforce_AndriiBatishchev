@@ -1,0 +1,236 @@
+# Test Cases – Room Booking UI
+
+Project: Automation in Testing Demo App
+
+Environment:
+
+* Admin panel: https://automationintesting.online/#/admin
+* User application: https://automationintesting.online/
+* Admin credentials: admin / password
+
+
+---
+
+## TC-01: Book a room with valid data
+
+**Test Data:**
+
+* First name: Test
+* Last name: Testovich
+* Email: test@test.com
+* Phone: +380991112233
+* Check-in date: Today + 1 days (random date)
+* Check-out date: Today + 7 days (random date+1day)
+
+**Steps:**
+
+1. Open User Application main page
+2. Set data in 'Check Availability & Book Your Stay':
+    Check In = Today + 1 days (random date)
+    Check Out = Today + 3 days (random date+1day)
+3. Click [Check Availability] button
+4. Scroll to the room list section
+5. Select an available (Single) room
+6. Click [Book now] button 
+7. Check that Single Room was Opened
+8. Fill in all required user fields with valid data
+9. Click [Reserve Now] button
+10. Set:
+        * First name: Test
+        * Last name: Testovich
+        * Email: test@test.com
+        * Phone: +380999999999
+11. Click [Reserve Now] button
+12. Check message 'Booking Confirmed + booking date'
+
+
+**Expected Result:**
+
+* Booking is successfully created
+* Confirmation message is displayed
+* Selected dates are no longer available for this room
+
+------------------------------------------------------------------------------------------------
+
+## TC-02: Attempt to book a room with invalid data
+
+**Steps:**
+
+Empty fields validation
+1. Open User Application main page
+2. Select an available room
+3. Click [Book this room] button
+4. Leave required fields empty
+5. Click [Book this room] button
+6. Check errors
+**Expected Result:**
+Errors:
+'Firstname should not be blank'
+'Lastname should not be blank'
+'must not be empty'
+------------------------------------
+Empty/incorrect Firstname
+1. Open User Application main page
+2. Select an available room
+3. Click [Book this room] button
+4. Set:
+        * First name: Empty
+        * Last name: Testovich
+        * Email: test@test.com
+        * Phone: +380999999999
+5. Click [Book this room] button
+6. Check errors
+**Expected Result:**
+Errors:
+'Firstname should not be blank'
+7. Set:
+        * First name: te
+        * Last name: Testovich
+        * Email: test@test.com
+        * Phone: +380999999999
+8. Click [Book this room] button
+9. Check errors
+**Expected Result:**
+Errors:
+size must be between 3 and 18'
+10. Set:
+        * First name: testtesttesttesttest
+        * Last name: Testovich
+        * Email: test@test.com
+        * Phone: +380999999999
+11. Click [Book this room] button
+12. Check errors
+**Expected Result:**
+Errors:
+size must be between 3 and 18'
+------------------------------------
+Empty/incorrect Lastname
+1. Open User Application main page
+2. Select an available room
+3. Click [Book this room] button
+4. Set:
+        * First name: Test
+        * Last name: empty
+        * Email: test@test.com
+        * Phone: +380999999999
+5. Click [Book this room] button
+6. Check errors ER:must not be empty'
+7. Set:
+        * First name: Test
+        * Last name: te
+        * Email: test@test.com
+        * Phone: +380999999999
+8. Click [Book this room] button
+9. Check errors
+**Expected Result:**
+Errors:
+'size must be between 3 and 30'
+10. Set:
+        * First name: Test
+        * Last name: testtesttesttesttestttesttestttesttest
+        * Email: test@test.com
+        * Phone: +380999999999
+11. Click [Book this room] button
+12. Check errors
+**Expected Result:**
+Errors:
+size must be between 3 and 30
+------------------------------------
+Empty/incorrect Email
+1. Open User Application main page
+2. Select an available room
+3. Click [Book this room] button
+4. Set:
+        * First name: Test
+        * Last name: Testovich
+        * Email: empty
+        * Phone: +380999999999
+5. Click [Book this room] button
+6. Check errors. ER:must not be empty'
+7. Set:
+        * First name: Test
+        * Last name: Testovich
+        * Email: test
+        * Phone: +380999999999
+8. Click [Book this room] button
+9. Check errors
+**Expected Result:**
+Errors:
+must be a well-formed email address
+10. Set:
+        * First name: Test
+        * Last name: Testovich
+        * Email: test@
+        * Phone: +380999999999
+11. Click [Book this room] button
+12. Check errors
+**Expected Result:**
+Errors:
+must be a well-formed email address
+------------------------------------
+Empty/incorrect Phone
+1. Open User Application main page
+2. Select an available room
+3. Click [Book this room] button
+4. Set:
+        * First name: Test
+        * Last name: Testovich
+        * Email: test@test.com
+        * Phone: empty
+5. Click [Book this room] button
+6. Check errors: ER:must not be empty'
+7. Set:
+        * First name: Test
+        * Last name: Testovich
+        * Email: test@test.com
+        * Phone: +3809
+8. Click [Book this room] button
+9. Check errors
+**Expected Result:**
+Errors:
+size must be between 11 and 21
+10. Set:
+        * First name: Test
+        * Last name: Testovich
+        * Email: test@test.com
+        * Phone: +3809999999999999999999999999
+11. Click [Book this room] button
+12. Check errors
+**Expected Result:**
+Errors:
+size must be between 11 and 21
+------------------------------------
+---------------------------------------------------------------------------------------------
+
+## TC-03: Verify earlier booked dates are shown as unavailable
+
+**Pre-requisites**
+1. Open User Application main page
+2. Set data in 'Check Availability & Book Your Stay':
+    Check In = Today + 1 days (random date)
+    Check Out = Today + 3 days (random date+1day)
+3. Click [Check Availability] button
+4. Scroll to the room list section
+5. Select an available (Single) room
+6. Click [Book now] button 
+7. Check that Single Room was Opened
+8. Fill in all required user fields with valid data
+9. Click [Reserve Now] button
+10. Set:
+        * First name: Test
+        * Last name: Testovich
+        * Email: test@test.com
+        * Phone: +380999999999
+11. Click [Reserve Now] button
+12. Check message 'Booking Confirmed + booking date'
+
+**Steps:**
+
+1. Select the same room that has an existing booking
+2. Click [Book this room] button
+3. Open date picker
+
+**Expected Result:**
+
+* Previously booked dates are disabled or marked as unavailable
+* User cannot select these dates for a new booking
